@@ -4,22 +4,22 @@ namespace ttt
 {
     public partial class Form1 : Form
     {
-        private int[,] board = new int[3, 3]; // 0 = пусто, 1 = X (крестик), 2 = O (нолик)
-        private bool xTurn = true; // чей ход: true - крестик ходит, false - нолик
-        private int scoreX = 0; // победа X
+        private int[,] board = new int[3, 3]; // 0 = РїСѓСЃС‚Рѕ, 1 = X (РєСЂРµСЃС‚РёРє), 2 = O (РЅРѕР»РёРє)
+        private bool xTurn = true; // С‡РµР№ С…РѕРґ: true - РєСЂРµСЃС‚РёРє С…РѕРґРёС‚, false - РЅРѕР»РёРє
+        private int scoreX = 0; // РїРѕР±РµРґР° X
         private int scoreO = 0;
-        private bool gameOver = false; //конец игры
-        private Point winStart, winEnd; //координаты нач и кон линии победы (зеленая)
+        private bool gameOver = false; //РєРѕРЅРµС† РёРіСЂС‹
+        private Point winStart, winEnd; //РєРѕРѕСЂРґРёРЅР°С‚С‹ РЅР°С‡ Рё РєРѕРЅ Р»РёРЅРёРё РїРѕР±РµРґС‹ (Р·РµР»РµРЅР°СЏ)
 
         public Form1()
         {
             InitializeComponent();
-            this.DoubleBuffered = true; //чтобы не мерцало при рисовании
-            this.Paint += Form1_Paint; //когда нужно перерисовать форму, вызывается метод
-            this.MouseClick += Form1_MouseClick; //при щелчке мыши вызывается метод (клик мыши по полю)
+            this.DoubleBuffered = true; //С‡С‚РѕР±С‹ РЅРµ РјРµСЂС†Р°Р»Рѕ РїСЂРё СЂРёСЃРѕРІР°РЅРёРё
+            this.Paint += Form1_Paint; //РєРѕРіРґР° РЅСѓР¶РЅРѕ РїРµСЂРµСЂРёСЃРѕРІР°С‚СЊ С„РѕСЂРјСѓ, РІС‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґ
+            this.MouseClick += Form1_MouseClick; //РїСЂРё С‰РµР»С‡РєРµ РјС‹С€Рё РІС‹Р·С‹РІР°РµС‚СЃСЏ РјРµС‚РѕРґ (РєР»РёРє РјС‹С€Рё РїРѕ РїРѕР»СЋ)
 
-            button1.Text = "Новая игра!";
-            button2.Text = "Сброс счета";
+            button1.Text = "РќРѕРІР°СЏ РёРіСЂР°!";
+            button2.Text = "РЎР±СЂРѕСЃ СЃС‡РµС‚Р°";
         }
 
         /*private void pictureBox1_Click(object sender, EventArgs e)
@@ -27,40 +27,40 @@ namespace ttt
 
         }*/
 
-        private void Form1_Paint(object sender, PaintEventArgs e) //рисование(заново,если надо)
+        private void Form1_Paint(object sender, PaintEventArgs e) //СЂРёСЃРѕРІР°РЅРёРµ(Р·Р°РЅРѕРІРѕ,РµСЃР»Рё РЅР°РґРѕ)
         {
             Graphics g = e.Graphics;
-            int cellSize = 100; //размер 1 клетки по ширине и высоте
+            int cellSize = 100; //СЂР°Р·РјРµСЂ 1 РєР»РµС‚РєРё РїРѕ С€РёСЂРёРЅРµ Рё РІС‹СЃРѕС‚Рµ
 
-            // Сетка:
-            Pen gridPen = new Pen(Color.Black, 2); //черный цвет - толщина 2 пикселя
+            // РЎРµС‚РєР°:
+            Pen gridPen = new Pen(Color.Black, 2); //С‡РµСЂРЅС‹Р№ С†РІРµС‚ - С‚РѕР»С‰РёРЅР° 2 РїРёРєСЃРµР»СЏ
             for (int i = 1; i < 3; i++)
             {
-                g.DrawLine(gridPen, i * cellSize, 0, i * cellSize, 300); //при 1 => от (100;0) до (100; 300) - верт линии
-                g.DrawLine(gridPen, 0, i * cellSize, 300, i * cellSize); //гориз линии
+                g.DrawLine(gridPen, i * cellSize, 0, i * cellSize, 300); //РїСЂРё 1 => РѕС‚ (100;0) РґРѕ (100; 300) - РІРµСЂС‚ Р»РёРЅРёРё
+                g.DrawLine(gridPen, 0, i * cellSize, 300, i * cellSize); //РіРѕСЂРёР· Р»РёРЅРёРё
             }
-            g.DrawRectangle(new Pen(Color.Black, 4), 0, 0, 300, 300); //рамка
+            g.DrawRectangle(new Pen(Color.Black, 4), 0, 0, 300, 300); //СЂР°РјРєР°
 
-            // Рисуем фигуры
-            for (int i = 0; i < 3; i++) //проходим по всем клеткам поля
+            // Р РёСЃСѓРµРј С„РёРіСѓСЂС‹
+            for (int i = 0; i < 3; i++) //РїСЂРѕС…РѕРґРёРј РїРѕ РІСЃРµРј РєР»РµС‚РєР°Рј РїРѕР»СЏ
             {
                 for (int j = 0; j < 3; j++)
                 {
                     int x = j * cellSize;
                     int y = i * cellSize;
-                    if (board[i, j] == 1) // крестик X
+                    if (board[i, j] == 1) // РєСЂРµСЃС‚РёРє X
                     {
-                        g.DrawLine(Pens.Red, x + 10, y + 10, x + cellSize - 10, y + cellSize - 10); //с отступом в 10 пикселей
+                        g.DrawLine(Pens.Red, x + 10, y + 10, x + cellSize - 10, y + cellSize - 10); //СЃ РѕС‚СЃС‚СѓРїРѕРј РІ 10 РїРёРєСЃРµР»РµР№
                         g.DrawLine(Pens.Red, x + cellSize - 10, y + 10, x + 10, y + cellSize - 10);
                     }
-                    else if (board[i, j] == 2) // нолик O
+                    else if (board[i, j] == 2) // РЅРѕР»РёРє O
                     {
                         g.DrawEllipse(Pens.Blue, x + 10, y + 10, cellSize - 20, cellSize - 20);
                     }
                 }
             }
 
-            //Линия, показывающая, какой игрок выиграл
+            //Р›РёРЅРёСЏ, РїРѕРєР°Р·С‹РІР°СЋС‰Р°СЏ, РєР°РєРѕР№ РёРіСЂРѕРє РІС‹РёРіСЂР°Р»
             if (gameOver)
             {
                 Pen winPen = new Pen(Color.Green, 4);
@@ -81,21 +81,21 @@ namespace ttt
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
-            if (gameOver) return; // игра уже окончена
+            if (gameOver) return; // РёРіСЂР° СѓР¶Рµ РѕРєРѕРЅС‡РµРЅР°
             int cellSize = 100;
-            int row = e.Y / cellSize; //опр строку (координата клика)
-            int col = e.X / cellSize; //опр столбец
-            if (row < 3 && col < 3 && board[row, col] == 0) //если клетка пуста
+            int row = e.Y / cellSize; //РѕРїСЂ СЃС‚СЂРѕРєСѓ (РєРѕРѕСЂРґРёРЅР°С‚Р° РєР»РёРєР°)
+            int col = e.X / cellSize; //РѕРїСЂ СЃС‚РѕР»Р±РµС†
+            if (row < 3 && col < 3 && board[row, col] == 0) //РµСЃР»Рё РєР»РµС‚РєР° РїСѓСЃС‚Р°
             {
-                board[row, col] = xTurn ? 1 : 2; //заполняю или Х, или О
-                xTurn = !xTurn; //ход изменила
-                CheckWin(); //есть ли победа
-                this.Invalidate(); // Перерисовать
+                board[row, col] = xTurn ? 1 : 2; //Р·Р°РїРѕР»РЅСЏСЋ РёР»Рё РҐ, РёР»Рё Рћ
+                xTurn = !xTurn; //С…РѕРґ РёР·РјРµРЅРёР»Р°
+                CheckWin(); //РµСЃС‚СЊ Р»Рё РїРѕР±РµРґР°
+                this.Invalidate(); // РџРµСЂРµСЂРёСЃРѕРІР°С‚СЊ
             }
         }
         private void CheckWin()
         {
-            int[,] lines = new int[,] //массив всех линий для победы
+            int[,] lines = new int[,] //РјР°СЃСЃРёРІ РІСЃРµС… Р»РёРЅРёР№ РґР»СЏ РїРѕР±РµРґС‹
             {
                {0,0, 0,1, 0,2},
                {1,0, 1,1, 1,2},
@@ -103,10 +103,10 @@ namespace ttt
                {0,0, 1,0, 2,0},
                {0,1, 1,1, 2,1},
                {0,2, 1,2, 2,2},
-               {0,0, 1,1, 2,2}, //гл диагональ
-               {0,2, 1,1, 2,0}  //поб диагональ
+               {0,0, 1,1, 2,2}, //РіР» РґРёР°РіРѕРЅР°Р»СЊ
+               {0,2, 1,1, 2,0}  //РїРѕР± РґРёР°РіРѕРЅР°Р»СЊ
             };
-            for (int i = 0; i < lines.GetLength(0); i++) //проверка линий на победу
+            for (int i = 0; i < lines.GetLength(0); i++) //РїСЂРѕРІРµСЂРєР° Р»РёРЅРёР№ РЅР° РїРѕР±РµРґСѓ
             {
                 int r1 = lines[i, 0], c1 = lines[i, 1];
                 int r2 = lines[i, 2], c2 = lines[i, 3];
@@ -115,57 +115,57 @@ namespace ttt
                     board[r1, c1] == board[r2, c2] &&
                     board[r2, c2] == board[r3, c3])
                 {
-                    gameOver = true; //игра завершена
+                    gameOver = true; //РёРіСЂР° Р·Р°РІРµСЂС€РµРЅР°
 
-                    // координаты для линии
-                    winStart = new Point(c1 * 100 + 50, r1 * 100 + 50); //*100-размер клетки, +50-смещение к центру клетки
+                    // РєРѕРѕСЂРґРёРЅР°С‚С‹ РґР»СЏ Р»РёРЅРёРё
+                    winStart = new Point(c1 * 100 + 50, r1 * 100 + 50); //*100-СЂР°Р·РјРµСЂ РєР»РµС‚РєРё, +50-СЃРјРµС‰РµРЅРёРµ Рє С†РµРЅС‚СЂСѓ РєР»РµС‚РєРё
                     winEnd = new Point(c3 * 100 + 50, r3 * 100 + 50);
                     this.Invalidate();
                     
                     if (board[r1, c1] == 1)
                     {
                         scoreX++;
-                        MessageBox.Show("Игрок X победил!:)");
+                        MessageBox.Show("РРіСЂРѕРє X РїРѕР±РµРґРёР»!:)");
                     }
                     else
                     {
                         scoreO++;
-                        MessageBox.Show("Игрок O победил!;)");
+                        MessageBox.Show("РРіСЂРѕРє O РїРѕР±РµРґРёР»!;)");
                     }
                     return;
                 }
             }
 
-            // Проверка на ничью
-            bool draw = true; //есть ничья
+            // РџСЂРѕРІРµСЂРєР° РЅР° РЅРёС‡СЊСЋ
+            bool draw = true; //РµСЃС‚СЊ РЅРёС‡СЊСЏ
             foreach (int val in board)
-                if (val == 0) draw = false; //если пустая клетка - ничьи нет
+                if (val == 0) draw = false; //РµСЃР»Рё РїСѓСЃС‚Р°СЏ РєР»РµС‚РєР° - РЅРёС‡СЊРё РЅРµС‚
             if (draw)
             {
-                gameOver = true; //игра закончилась
-                MessageBox.Show("Ничья!:(");
+                gameOver = true; //РёРіСЂР° Р·Р°РєРѕРЅС‡РёР»Р°СЃСЊ
+                MessageBox.Show("РќРёС‡СЊСЏ!:(");
             }
         }
 
-        private void button1_Click(object sender, EventArgs e) //новая игра
+        private void button1_Click(object sender, EventArgs e) //РЅРѕРІР°СЏ РёРіСЂР°
         {
-            board = new int[3, 3]; //двум массив - очистка поля
+            board = new int[3, 3]; //РґРІСѓРј РјР°СЃСЃРёРІ - РѕС‡РёСЃС‚РєР° РїРѕР»СЏ
             gameOver = false;
-            winStart = Point.Empty; //очищаю координаты линии победы
+            winStart = Point.Empty; //РѕС‡РёС‰Р°СЋ РєРѕРѕСЂРґРёРЅР°С‚С‹ Р»РёРЅРёРё РїРѕР±РµРґС‹
             winEnd = Point.Empty;
-            this.Invalidate(); //перерисовка формы
+            this.Invalidate(); //РїРµСЂРµСЂРёСЃРѕРІРєР° С„РѕСЂРјС‹
         }
 
-        private void button2_Click(object sender, EventArgs e) //сброс счета
+        private void button2_Click(object sender, EventArgs e) //СЃР±СЂРѕСЃ СЃС‡РµС‚Р°
         {
             scoreX = 0;
             scoreO = 0;
-            button1_Click(sender, e); //новое поле - сброс gameOver, нет линии поб + запуск новой игры
+            button1_Click(sender, e); //РЅРѕРІРѕРµ РїРѕР»Рµ - СЃР±СЂРѕСЃ gameOver, РЅРµС‚ Р»РёРЅРёРё РїРѕР± + Р·Р°РїСѓСЃРє РЅРѕРІРѕР№ РёРіСЂС‹
         }
         protected override void OnPaintBackground(PaintEventArgs e)
         {
             base.OnPaintBackground(e);
-            e.Graphics.DrawString($"X: {scoreX} <-Счет-> O: {scoreO}", new Font("Segoe UI", 12), Brushes.Black, 65, 310);
+            e.Graphics.DrawString($"X: {scoreX} <-РЎС‡РµС‚-> O: {scoreO}", new Font("Segoe UI", 12), Brushes.Black, 65, 310);
         }
     }
 }
