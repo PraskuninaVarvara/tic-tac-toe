@@ -1,0 +1,17 @@
+C:\Users\ya\source\repos\ttt\ttt\bin\Debug\net8.0-windows\ttt.exe
+C:\Users\ya\source\repos\ttt\ttt\bin\Debug\net8.0-windows\ttt.deps.json
+C:\Users\ya\source\repos\ttt\ttt\bin\Debug\net8.0-windows\ttt.runtimeconfig.json
+C:\Users\ya\source\repos\ttt\ttt\bin\Debug\net8.0-windows\ttt.dll
+C:\Users\ya\source\repos\ttt\ttt\bin\Debug\net8.0-windows\ttt.pdb
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.Form1.resources
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.Properties.Resources.resources
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.csproj.GenerateResource.cache
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.AssemblyInfoInputs.cache
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.AssemblyInfo.cs
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.csproj.CoreCompileInputs.cache
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.dll
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\refint\ttt.dll
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.pdb
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ttt.genruntimeconfig.cache
+C:\Users\ya\source\repos\ttt\ttt\obj\Debug\net8.0-windows\ref\ttt.dll
