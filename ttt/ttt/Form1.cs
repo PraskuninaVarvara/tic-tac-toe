@@ -22,11 +22,6 @@ namespace ttt
             button2.Text = "Сброс счета";
         }
 
-        /*private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }*/
-
         private void Form1_Paint(object sender, PaintEventArgs e) //рисование(заново,если надо)
         {
             Graphics g = e.Graphics;
@@ -68,16 +63,6 @@ namespace ttt
                 g.DrawLine(winPen, winStart, winEnd);
             }
         }
-
-        /*private void textBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_MouseClick(object sender, MouseEventArgs e)
-        {
-
-        }*/
 
         private void Form1_MouseClick(object sender, MouseEventArgs e)
         {
